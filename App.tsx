@@ -15,11 +15,18 @@ const App = () => {
     return () => clearTimeout(timeout);
   })
   return (
-    isShowSplash ? <SplashScreen/> :
-    <NavigationContainer>
+    <>
+      <StatusBar barStyle="dark-content" backgroundColor="transparent"/>
+      {!isShowSplash ? (
+        <SplashScreen/>
 
-      <AuthNavigator/>
-    </NavigationContainer>
+      ) : (
+        <NavigationContainer>
+          <AuthNavigator/>
+        </NavigationContainer>
+      )}
+    
+    </>
   );
 };
 
