@@ -41,7 +41,7 @@ const InputComponent = (props: Props) => {
         value={value}
         placeholder={placeholder ?? ''}
         onChangeText={val => onChange(val)}
-        secureTextEntry={isPassword}
+        secureTextEntry={isShowPass}
         placeholderTextColor={'#747688'}
         keyboardType={type ?? 'default'}
         autoCapitalize='none'
@@ -49,7 +49,7 @@ const InputComponent = (props: Props) => {
         />
         {suffix ?? suffix}
         <TouchableOpacity
-            onPress={isPassword ? ()=> setIsShowPass(!isPassword) : ()=> onChange('')}
+            onPress={()=> setIsShowPass(!isShowPass)}
         >
             {isPassword ? (
           <FontAwesome
