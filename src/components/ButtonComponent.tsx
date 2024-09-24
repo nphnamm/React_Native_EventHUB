@@ -51,11 +51,7 @@ const ButtonComponent = (props: Props) => {
           globalStyles.button,
           globalStyles.shadow,
           {
-            backgroundColor: color
-              ? color
-              : disable
-              ? appColors.gray4
-              : appColors.primary,
+            backgroundColor: type === 'primary' ? appColors.primary : appColors.gray,
             marginBottom: 17,
             width: '90%',
           },
