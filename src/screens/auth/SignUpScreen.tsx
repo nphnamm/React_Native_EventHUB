@@ -1,4 +1,4 @@
-import {Lock, Sms} from 'iconsax-react-native';
+import {Lock, Sms,User} from 'iconsax-react-native';
 import React, {useEffect, useState} from 'react';
 import {Alert, Image, Switch} from 'react-native';
 import {
@@ -46,8 +46,22 @@ const SignUpScreen = ({navigation}: any) => {
 
 
   return (
-    <ContainerComponent isImageBackground isScroll>
-
+    <ContainerComponent isImageBackground isScroll back>
+    <SectionComponent
+        styles={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginTop: 75,
+        }}>
+        <Image
+          source={require('../../assets/images/text-logo.png')}
+          style={{
+            width: 162,
+            height: 114,
+            marginBottom: 30,
+          }}
+        />
+      </SectionComponent>
       <SectionComponent>
         <TextComponent size={24} title text="Sign Up" />
         <SpaceComponent height={21} />

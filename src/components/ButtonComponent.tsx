@@ -51,7 +51,11 @@ const ButtonComponent = (props: Props) => {
           globalStyles.button,
           globalStyles.shadow,
           {
-            backgroundColor: type === 'primary' ? appColors.primary : appColors.gray,
+            backgroundColor: color
+              ? color
+              : disable
+              ? appColors.gray4
+              : appColors.primary,
             marginBottom: 17,
             width: '90%',
           },
@@ -82,6 +86,8 @@ const ButtonComponent = (props: Props) => {
         text={text}
         color={type === 'link' ? appColors.primary : appColors.text}
       />
+      {icon && iconFlex === 'right' && icon}
+
     </TouchableOpacity>
   );
 };
