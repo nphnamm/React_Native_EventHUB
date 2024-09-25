@@ -119,8 +119,8 @@ const SignUpScreen = ({navigation}: any) => {
           <TextComponent text="Don’t have an account? " />
           <ButtonComponent
             type="link"
-            text="Sign up"
-            onPress={() => navigation.navigate('SignUpScreen')}
+            text="Sign In"
+            onPress={() => navigation.navigate('LoginScreen')}
           />
         </RowComponent>
       </SectionComponent>
