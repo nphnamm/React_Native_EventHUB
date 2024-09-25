@@ -15,11 +15,18 @@ import {Validate} from '../../utils/validate';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SocialLogin from './components/SocialLogin';
 
-const LoginScreen = ({navigation}: any) => {
+const initValue = {
+  username: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+};
+const SignUpScreen = ({navigation}: any) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isRemember, setIsRemember] = useState(true);
   const [isDisable, setIsDisable] = useState(true);
+  const [values, setValues] = useState(initValue);
 
 
   useEffect(() => {
@@ -31,29 +38,26 @@ const LoginScreen = ({navigation}: any) => {
       setIsDisable(false);
     }
   }, [email, password]);
-
+  const handleChangeValue = (key: string, value: string) =>{
+    const data: any ={...values};
+    data[`${key}`] = value;
+    setValues(data);
+  }
 
 
   return (
     <ContainerComponent isImageBackground isScroll>
-      <SectionComponent
-        styles={{
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginTop: 75,
-        }}>
-        <Image
-          source={require('../../assets/images/text-logo.png')}
-          style={{
-            width: 162,
-            height: 114,
-            marginBottom: 30,
-          }}
-        />
-      </SectionComponent>
+
       <SectionComponent>
-        <TextComponent size={24} title text="Sign in" />
+        <TextComponent size={24} title text="Sign Up" />
         <SpaceComponent height={21} />
+        <InputComponent
+            value={values.username}
+            placeholder="Full name"
+            onChange={val => handleChangeValue('username', val)}
+            allowClear
+            affix={<User size={22} color={appColors.gray} />}
+          />
         <InputComponent
           value={email}
           placeholder="Email"
@@ -110,4 +114,4 @@ const LoginScreen = ({navigation}: any) => {
   );
 };
 
-export default LoginScreen;
+export default SignUpScreen;
