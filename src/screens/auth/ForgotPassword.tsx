@@ -11,6 +11,7 @@ import {
 import { ArrowRight, Sms } from 'iconsax-react-native';
 import { appColors } from '../../constants/appColors';
 import LoadingModal from '../../modals/LoadingModal';
+import { Validate } from '../../utils/validate';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -18,7 +19,8 @@ const ForgotPassword = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleCheckEmail = () =>{
-
+    const isValidEmail = Validate.email(email);
+    setIsDisable(!isValidEmail);
   }
   const handleForgotPassword = async () => {
 
