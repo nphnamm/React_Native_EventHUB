@@ -57,8 +57,10 @@ const SignUpScreen = ({navigation}: any) => {
           message='';
 
         }
+        break;
       case 'password':
         message = !values.password ? `Password is required!!!`: '';
+        break;
       case 'confirmPassword':
         if(!values.confirmPassword){
           message = `Please type confirm password!!!`;
@@ -76,15 +78,16 @@ const SignUpScreen = ({navigation}: any) => {
 
   }
   const handleRegister = async () =>{
-    const api =`/verification`;
+    const api =`/register`;
     setIsLoading(true);
     try{
-      const res = await authenticationAPI.HandleAuthentication(api, {email: values.email},'post',)
+      const res = await authenticationAPI.HandleAuthentication('/register',values,'post',)
       setIsLoading(false);
-      navigation.navigate('Verification',{
-        code:res.data.code,
-        ...values
-      })
+      // navigation.navigate('Verification',{
+      //   code:res.data.code,
+      //   ...values
+      // })
+      console.log(res);
     
     }catch(error){
       console.log(error);
