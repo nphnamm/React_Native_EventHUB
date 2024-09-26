@@ -14,6 +14,8 @@ import {appColors} from '../../constants/appColors';
 import {Validate} from '../../utils/validate';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SocialLogin from './components/SocialLogin';
+import LoadingModal from '../../modals/LoadingModal';
+import authenticationAPI from '../../apis/authApi';
 
 const initValue = {
   username: '',
@@ -22,109 +24,154 @@ const initValue = {
   confirmPassword: '',
 };
 const SignUpScreen = ({navigation}: any) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [isRemember, setIsRemember] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [isDisable, setIsDisable] = useState(true);
+  const [errorMessage,setErrorMessage] = useState<any>();
   const [values, setValues] = useState(initValue);
 
 
   useEffect(() => {
-    const emailValidation = Validate.email(email);
-
-    if (!email || !password || !emailValidation) {
+    if(!errorMessage || (errorMessage && (errorMessage.email || errorMessage.password || errorMessage.confirmPassword)) || !values.email || !values.password || !values.confirmPassword){
       setIsDisable(true);
-    } else {
+
+    }else{
       setIsDisable(false);
     }
-  }, [email, password]);
+  }, [errorMessage, values]);
   const handleChangeValue = (key: string, value: string) =>{
     const data: any ={...values};
     data[`${key}`] = value;
     setValues(data);
   }
+  const formValidator = (key: string) =>{
+    const data ={...errorMessage};
+    let message = ``;
+    switch(key){
+      case 'email':
+        if(!values.email){
+          message = `Email is required!!!`;
+
+        }else if(!Validate.email(values.email)){
+          message ="Email is invalid!";
+        }else{
+          message='';
+
+        }
+      case 'password':
+        message = !values.password ? `Password is required!!!`: '';
+      case 'confirmPassword':
+        if(!values.confirmPassword){
+          message = `Please type confirm password!!!`;
+
+        }else if(values.confirmPassword !== values.password){
+          message = `Password and confirm password must be same!!!`
+        }else{
+          message = '';
+        }
+        break;
+    }
+    data[`${key}`] = message;
+    setErrorMessage(data);
+
+
+  }
+  const handleRegister = async () =>{
+    const api =`/verification`;
+    setIsLoading(true);
+    try{
+      const res = await authenticationAPI.HandleAuthentication(api, {email: values.email},'post',)
+      setIsLoading(false);
+      navigation.navigate('Verification',{
+        code:res.data.code,
+        ...values
+      })
+    
+    }catch(error){
+      console.log(error);
+      setIsLoading(false);
+    }
+
+  }
 
 
   return (
-    <ContainerComponent isImageBackground isScroll back>
-    <SectionComponent
-        styles={{
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginTop: 75,
-        }}>
-        <Image
-          source={require('../../assets/images/text-logo.png')}
-          style={{
-            width: 162,
-            height: 114,
-            marginBottom: 30,
-          }}
-        />
-      </SectionComponent>
-      <SectionComponent>
-        <TextComponent size={24} title text="Sign Up" />
-        <SpaceComponent height={21} />
-        <InputComponent
+   <>
+      <ContainerComponent isImageBackground isScroll back>
+        <SectionComponent>
+          <TextComponent size={24} title text="Sign up" />
+          <SpaceComponent height={21} />
+          <InputComponent
             value={values.username}
             placeholder="Full name"
             onChange={val => handleChangeValue('username', val)}
             allowClear
             affix={<User size={22} color={appColors.gray} />}
           />
-        <InputComponent
-          value={email}
-          placeholder="Email"
-          onChange={val => setEmail(val)}
-          allowClear
-          affix={<Sms size={22} color={appColors.gray} />}
-        />
-        <InputComponent
-          value={password}
-          placeholder="Password"
-          onChange={val => setPassword(val)}
-          isPassword
-          allowClear
-          affix={<Lock size={22} color={appColors.gray} />}
-        />
-        <RowComponent justify="space-between">
-          <RowComponent onPress={() => setIsRemember(!isRemember)}>
-            <Switch
-              trackColor={{true: appColors.primary}}
-              thumbColor={appColors.white}
-              value={isRemember}
-              onChange={() => setIsRemember(!isRemember)}
+          <InputComponent
+            value={values.email}
+            placeholder="abc@email.com"
+            onChange={val => handleChangeValue('email', val)}
+            allowClear
+            affix={<Sms size={22} color={appColors.gray} />}
+            onEnd={() => formValidator('email')}
+          />
+          <InputComponent
+            value={values.password}
+            placeholder="Password"
+            onChange={val => handleChangeValue('password', val)}
+            isPassword
+            allowClear
+            affix={<Lock size={22} color={appColors.gray} />}
+            onEnd={() => formValidator('password')}
+          />
+          <InputComponent
+            value={values.confirmPassword}
+            placeholder="Confirm password"
+            onChange={val => handleChangeValue('confirmPassword', val)}
+            isPassword
+            allowClear
+            affix={<Lock size={22} color={appColors.gray} />}
+            onEnd={() => formValidator('confirmPassword')}
+          />
+        </SectionComponent>
+
+        {errorMessage && (
+          <SectionComponent>
+            {Object.keys(errorMessage).map(
+              (error, index) =>
+                errorMessage[`${error}`] && (
+                  <TextComponent
+                    text={errorMessage[`${error}`]}
+                    key={`error${index}`}
+                    color={appColors.danger}
+                  />
+                ),
+            )}
+          </SectionComponent>
+        )}
+        <SpaceComponent height={16} />
+        <SectionComponent>
+          <ButtonComponent
+            onPress={handleRegister}
+            text="SIGN UP"
+            disable={isDisable}
+            type="primary"
+          />
+        </SectionComponent>
+        <SocialLogin />
+        <SectionComponent>
+          <RowComponent justify="center">
+            <TextComponent text="Don’t have an account? " />
+            <ButtonComponent
+              type="link"
+              text="Sign in"
+              onPress={() => navigation.navigate('LoginScreen')}
             />
-            <SpaceComponent width={4} />
-            <TextComponent text="Remember me" />
           </RowComponent>
-          <ButtonComponent
-            text="Forgot Password?"
-            onPress={() => navigation.navigate('ForgotPassword')}
-            type="text"
-          />
-        </RowComponent>
-      </SectionComponent>
-      <SpaceComponent height={16} />
-      <SectionComponent>
-        <ButtonComponent
-          disable={isDisable}
-          text="SIGN IN"
-          type="primary"
-        />
-      </SectionComponent>
-      <SocialLogin/>
-      <SectionComponent>
-        <RowComponent justify="center">
-          <TextComponent text="Don’t have an account? " />
-          <ButtonComponent
-            type="link"
-            text="Sign In"
-            onPress={() => navigation.navigate('LoginScreen')}
-          />
-        </RowComponent>
-      </SectionComponent>
-    </ContainerComponent>
+        </SectionComponent>
+      </ContainerComponent>
+      <LoadingModal visible={isLoading} />
+      </>
   );
 };
 
