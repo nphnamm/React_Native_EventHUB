@@ -8,7 +8,6 @@ import {useAsyncStorage} from '@react-native-async-storage/async-storage';
 import MainNavigator from './src/navigators/MainNavigator';
 
 
-
 const App = () => {
   const [isShowSplash, setIsShowSplash] = useState(true);
   const [accessToken,setAccessToken] = useState('');
@@ -36,19 +35,16 @@ const App = () => {
 
   return (
     <>
-      <StatusBar 
-      barStyle="dark-content" 
-      backgroundColor="transparent"
-      translucent
-      />
-      {isShowSplash ? (
-        <SplashScreen/>
-
-      ) : (
+     <Provider store={store}>
+        <StatusBar
+        barStyle="dark-content"
+        backgroundColor="transparent"
+        translucent
+        />
         <NavigationContainer>
-          {accessToken ? <MainNavigator/> : <AuthNavigator/>}
+          <AppRouters/>
         </NavigationContainer>
-      )}
+     </Provider>
     
     </>
   );

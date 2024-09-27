@@ -14,12 +14,15 @@ import {appColors} from '../../constants/appColors';
 import {Validate} from '../../utils/validate';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SocialLogin from './components/SocialLogin';
+import authenticationAPI from '../../apis/authApi';
+import { useDispatch } from 'react-redux';
 
 const LoginScreen = ({navigation}: any) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isRemember, setIsRemember] = useState(true);
   const [isDisable, setIsDisable] = useState(true);
+  const dispatch = useDispatch();
 
 
   useEffect(() => {
@@ -31,7 +34,21 @@ const LoginScreen = ({navigation}: any) => {
       setIsDisable(false);
     }
   }, [email, password]);
-
+  const handleLogin = async () =>{
+    const emailValidation = Validate.email(email);
+    if(emailValidation){
+      try{
+        const res = await authenticationAPI.HandleAuthentication(
+          '/login',
+          {email,password},
+          'post',
+        );
+        dispatch
+      }catch(error){
+        console.log(error);
+      }
+    }
+  }
 
 
   return (
