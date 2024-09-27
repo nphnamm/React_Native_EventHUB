@@ -16,6 +16,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import SocialLogin from './components/SocialLogin';
 import authenticationAPI from '../../apis/authApi';
 import { useDispatch } from 'react-redux';
+import { addAuth } from '../../redux/reducers/authReducer';
 
 const LoginScreen = ({navigation}: any) => {
   const [email, setEmail] = useState('');
@@ -43,10 +44,16 @@ const LoginScreen = ({navigation}: any) => {
           {email,password},
           'post',
         );
-        dispatch
+        dispatch(addAuth(res.data));
+        await AsyncStorage.setItem(
+          'auth',
+          isRemember ? JSON.stringify(res.data) : email
+        )
       }catch(error){
         console.log(error);
       }
+    }else{
+      Alert.alert("email is not correct ")
     }
   }
 
@@ -110,6 +117,7 @@ const LoginScreen = ({navigation}: any) => {
           disable={isDisable}
           text="SIGN IN"
           type="primary"
+          onPress={handleLogin}
         />
       </SectionComponent>
       <SocialLogin/>

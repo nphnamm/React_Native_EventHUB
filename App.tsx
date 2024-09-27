@@ -6,6 +6,8 @@ import { SplashScreen } from './src/screens';
 import AuthNavigator from './src/navigators/AuthNavigator';
 import {useAsyncStorage} from '@react-native-async-storage/async-storage';
 import MainNavigator from './src/navigators/MainNavigator';
+import store from './src/redux/store';
+import AppRouters from './src/navigators/AppRouters';
 
 
 const App = () => {
