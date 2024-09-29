@@ -10,7 +10,9 @@ import AuthNavigator from './AuthNavigator';
 const AppRouters = () => {
   const [isShowSplash, setIsShowSplash] = useState(true);
   const {getItem} = useAsyncStorage('auth');
+  console.log('get' , getItem)
   const dispatch = useDispatch();
+  const auth = useSelector(authSelector);
   useEffect(() => {
     checkLogin();
     const timeout = setTimeout(() => {
@@ -21,11 +23,10 @@ const AppRouters = () => {
   }, []);
   const checkLogin = async () => {
     const res = await getItem();
-
+    console.log('res', res);
     res && dispatch(addAuth(JSON.parse(res)));
   };
 
-  const auth = useSelector(authSelector);
 
   return <>{isShowSplash ? <SplashScreen /> : auth.accesstoken? (
     <MainNavigator/>

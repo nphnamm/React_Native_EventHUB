@@ -78,15 +78,15 @@ const SignUpScreen = ({navigation}: any) => {
 
   }
   const handleRegister = async () =>{
-    const api =`/register`;
+    const api = `/verification`;
     setIsLoading(true);
     try{
-      const res = await authenticationAPI.HandleAuthentication('/register',values,'post',)
+      const res = await authenticationAPI.HandleAuthentication(api,{email:values.email},'post',)
       setIsLoading(false);
-      // navigation.navigate('Verification',{
-      //   code:res.data.code,
-      //   ...values
-      // })
+       navigation.navigate('Verification',{
+         code:res.data.code,
+         ...values
+       })
       console.log(res);
     
     }catch(error){
