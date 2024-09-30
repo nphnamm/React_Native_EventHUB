@@ -30,7 +30,7 @@ const SignUpScreen = ({navigation}: any) => {
   const [values, setValues] = useState(initValue);
 
 
-  useEffect(() => {
+  useEffect( () => {
     if(!errorMessage || (errorMessage && (errorMessage.email || errorMessage.password || errorMessage.confirmPassword)) || !values.email || !values.password || !values.confirmPassword){
       setIsDisable(true);
 
@@ -78,7 +78,10 @@ const SignUpScreen = ({navigation}: any) => {
 
   }
   const handleRegister = async () =>{
+    await AsyncStorage.setItem('auth','');
+
     const api = `/verification`;
+    console.log('check value', values);
     setIsLoading(true);
     try{
       const res = await authenticationAPI.HandleAuthentication(api,{email:values.email},'post',)
