@@ -12,6 +12,7 @@ import CircleComponent from '../components/CircleComponent';
 import { globalStyles } from '../styles/globalStyles';
 import { TextComponent } from '../components';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import ExploreNavigator from './ExploreNavigator';
 
 const TabNavigator = () => {
     const Tab = createBottomTabNavigator();
@@ -33,7 +34,7 @@ const TabNavigator = () => {
         color = focused ? appColors.primary : appColors.gray5;
         size = 24;
         switch (route.name) {
-          case 'HomeScreen':
+          case 'Explore':
             icon = <MaterialIcons name="explore" size={size} color={color} />;
             break;
 
@@ -83,8 +84,8 @@ const TabNavigator = () => {
     
     
     >
-        <Tab.Screen name='HomeScreen' component={HomeScreen}/>
-        <Tab.Screen name='Events' component={EventNavigator}/>
+      <Tab.Screen name="Explore" component={ExploreNavigator} />
+      <Tab.Screen name='Events' component={EventNavigator}/>
         <Tab.Screen name='Add' component={AddNewScreen}/>
         <Tab.Screen name='Map' component={MapNavigator}/>
         <Tab.Screen name="Profile" component={ProfileNavigator} />
