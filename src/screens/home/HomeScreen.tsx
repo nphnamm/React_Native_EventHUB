@@ -139,7 +139,9 @@ const HomeScreen = ({navigation}:any) => {
           renderItem={({item}) => <EventItem type="card" item={item} />}
         />
       </ScrollView>
+
     </View>
+
   )
 }
 

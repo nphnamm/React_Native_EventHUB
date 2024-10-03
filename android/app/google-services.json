@@ -1,0 +1,36 @@
+{
+    "project_info": {
+      "project_number": "211112245726",
+      "project_id": "eventhub-437304"
+    },
+    "client": [
+      {
+        "client_info": {
+          "android_client_info": {
+            "package_name": "com.eventhub"
+          }
+        },
+        "oauth_client": [
+            {
+                "client_id": "211112245726-dio1s1old14pvjbhm1dl4iugk60t9cn5.apps.googleusercontent.com",
+                "client_type": 1,
+                "android_info": {
+                  "package_name": "com.eventhub",
+                  "certificate_hash": "91:17:B4:40:6B:74:60:98:6A:D9:39:46:FA:84:37:2E:32:B5:97:46"
+                }
+              }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyApxAPrpuE6i9bQNqPim-wcKu94B3G-PEU"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": []
+          }
+        }
+      }
+    ],
+    "configuration_version": "1"
+  }
