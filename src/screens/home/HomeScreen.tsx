@@ -17,7 +17,7 @@ import TagBarComponent from '../../components/TagBarComponent'
 const HomeScreen = ({navigation}:any) => {
   const dispatch = useDispatch();
   const auth = useSelector(authSelector);
-
+  
   return (
     <View style={[globalStyles.container]}>
       <StatusBar barStyle={'light-content'} />
