@@ -12,10 +12,10 @@ const DrawerNavigator = () => {
         headerShown: false,
         drawerPosition: 'left',
       }}
-      // drawerContent={props => <DrawerCustom {...props}/>}
+       drawerContent={props => <DrawerCustom {...props}/>}
     >       
     
-      <Drawer.Screen name="Home" component={HomeScreen} />
+      {/* <Drawer.Screen name="Home" component={HomeScreen} /> */}
 
       <Drawer.Screen name="HomeNavigator" component={TabNavigator} />
     </Drawer.Navigator>

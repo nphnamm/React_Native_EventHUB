@@ -1,9 +1,9 @@
 import {
     View,
-    Text,
+    
     StyleProp,
     ViewStyle,
-    Touchable,
+    
     TouchableOpacity,
   } from 'react-native';
   import React, {ReactNode} from 'react';
@@ -21,18 +21,20 @@ import {
     styles?: StyleProp<ViewStyle>;
     children: ReactNode;
     onPress?: () => void;
+    text?: string;
   }
   
   const RowComponent = (props: Props) => {
-    const {styles, justify, children, onPress} = props;
-  
+    const {styles, justify, children, onPress , text} = props;
+    
     const localStyle = [
       globalStyles.row,
       {
-        justifyContent: justify ?? 'center',
+        // justifyContent: justify ?? 'center',
       },
       styles,
     ];
+    console.log('justify',localStyle[1] ,text)
   
     return onPress ? (
       <TouchableOpacity activeOpacity={0.5} onPress={onPress} style={localStyle}>
