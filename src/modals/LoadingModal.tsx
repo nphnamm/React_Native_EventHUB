@@ -5,6 +5,7 @@ interface Props {
     visible: boolean;
     mess?: string
 }
+
 const LoadingModal = (props: Props) => {
     const {visible, mess} = props;
 
@@ -29,6 +30,7 @@ const LoadingModal = (props: Props) => {
       <Text>LoadingModal</Text>
     </Modal>
   )
+  
 }
 
 export default LoadingModal

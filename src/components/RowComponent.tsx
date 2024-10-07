@@ -30,11 +30,11 @@ import {
     const localStyle = [
       globalStyles.row,
       {
-        // justifyContent: justify ?? 'center',
+         justifyContent: justify ?? 'center',
       },
       styles,
     ];
-    console.log('justify',localStyle[1] ,text)
+    // console.log('justify',localStyle[1] ,text)
   
     return onPress ? (
       <TouchableOpacity activeOpacity={0.5} onPress={onPress} style={localStyle}>
