@@ -10,9 +10,10 @@ import { fontFamilies } from '../constants/fontFamilies';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AvatarGroup from './AvatarGroup';
 import { Location } from 'iconsax-react-native';
+import { EventModel } from '../models/EventModel';
 
 interface Props {
-  item: any;
+  item: EventModel;
   type: 'list' | 'card';
   onPress?: () => void;
 }

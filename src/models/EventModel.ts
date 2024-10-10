@@ -1,5 +1,5 @@
 export interface EventModel{
-    author:string;
+    authorId:string;
     date:number;
     description:string;
     endAt: number;
