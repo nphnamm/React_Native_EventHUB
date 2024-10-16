@@ -1,8 +1,8 @@
 import { View, Text, ImageBackground, TouchableOpacity, ScrollView } from 'react-native'
 import React from 'react'
-import { ContainerComponent, RowComponent, SectionComponent, TextComponent } from '../../components'
+import { ButtonComponent, ContainerComponent, RowComponent, SectionComponent, SpaceComponent, TextComponent } from '../../components'
 import LinearGradient from 'react-native-linear-gradient'
-import { ArrowLeft } from 'iconsax-react-native'
+import { ArrowLeft, ArrowRight, Calendar, Location } from 'iconsax-react-native'
 import { appColors } from '../../constants/appColors';
 import CardComponent from '../../components/CardComponent'
 import { globalStyles } from '../../styles/globalStyles'
@@ -10,6 +10,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AvatarGroup from '../../components/AvatarGroup'
 import { fontFamilies } from '../../constants/fontFamilies'
 import { EventModel } from '../../models/EventModel'
+import { Image } from 'react-native'
 
 const EventDetail = ({ navigation, route }: any) => {
   const { item }: { item: EventModel } = route.params;
@@ -26,7 +27,7 @@ const EventDetail = ({ navigation, route }: any) => {
           resizeMode: 'cover'
         }}
       >
-        <LinearGradient colors={['rbga(0,0,0,0.7)', 'rgba(0,0,0,0)']}>
+        <LinearGradient colors={['rgba(0,0,0,0.7)', 'rgba(0,0,0,0)']}>
           <RowComponent styles={
             {
               padding: 16,
@@ -105,13 +106,141 @@ const EventDetail = ({ navigation, route }: any) => {
                 text={item.title}
               />
             </SectionComponent>
+            <SectionComponent>
+              <RowComponent styles={{ marginBottom: 20 }}>
+                <CardComponent
+                  styles={[globalStyles.noSpaceCard]}
+                  color={`${appColors.primary}4D`}
 
+                >
+                  <Calendar
+                    variant='Bold'
+                    color={appColors.primary}
+                    size={24}
+                  />
+                </CardComponent>
+                <SpaceComponent width={16} />
+                <View
+                  style={{
+                    flex: 1, height: 48, justifyContent: 'space-around'
+                  }}
+                >
+                  <TextComponent
+                    text='14 December, 2021'
+                    font={fontFamilies.medium}
+                    size={16}
+                  />
+                  <TextComponent
+                    text="Tuesday, 4:00PM - 9:00PM"
+                    color={appColors.gray}
 
+                  />
+
+                </View>
+              </RowComponent>
+
+              <RowComponent styles={{ marginBottom: 20 }}>
+                <CardComponent
+                  styles={[globalStyles.noSpaceCard]}
+                  color={`${appColors.primary}4D`}
+
+                >
+                  <Location
+                    variant="Bold"
+                    color={appColors.primary}
+                    size={24}
+                  />
+                </CardComponent>
+                <SpaceComponent width={16} />
+                <View
+                  style={{
+                    flex: 1, height: 48, justifyContent: 'space-around'
+                  }}
+                >
+                  <TextComponent
+                    text={item.location.title}
+                    font={fontFamilies.medium}
+                    size={16}
+                  />
+                  <TextComponent
+                    text={item.location.address}
+                    color={appColors.gray}
+
+                  />
+
+                </View>
+              </RowComponent>
+
+              <RowComponent styles={{ marginBottom: 20 }}>
+                <Image
+                  source={{
+                    uri: 'https://gamek.mediacdn.vn/133514250583805952/2022/5/18/photo-1-16528608926331302726659.jpg',
+                  }}
+                  style={{
+                    width: 48,
+                    height: 48,
+                    borderRadius: 12,
+                    resizeMode: 'cover',
+                  }}
+                />
+
+                <SpaceComponent width={16} />
+                <View
+                  style={{
+                    flex: 1, height: 48, justifyContent: 'space-around'
+                  }}
+                >
+                  <TextComponent
+                    text="Son Tung MTP"
+                    font={fontFamilies.medium}
+                    size={16}
+                  />
+                  <TextComponent
+                    text="Tuesday, 4:00PM - 9:00PM"
+                    color={appColors.gray}
+
+                  />
+
+                </View>
+              </RowComponent>
+
+            </SectionComponent>
           </View>
         </ScrollView>
-
-
       </ImageBackground>
+      <LinearGradient
+        colors={['rgba(255,255,255,0.9)', 'rgba(255,255,255,1)']}
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          right: 0,
+          left: 0,
+          padding: 12,
+        }}
+      >
+        <ButtonComponent
+          text='BUY TICKET $120'
+          type='primary'
+          onPress={() => { }}
+          iconFlex='right'
+          icon={
+            <View
+              style={[
+                globalStyles.iconContainer,
+                {
+                  backgroundColor: '3D56F0',
+                }
+              ]}
+            >
+              <ArrowRight size={18} color={appColors.white} />
+
+            </View>
+          }
+
+        />
+
+      </LinearGradient>
+
     </View>
   )
 }
