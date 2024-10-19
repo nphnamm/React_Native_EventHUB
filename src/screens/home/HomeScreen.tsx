@@ -15,17 +15,37 @@ import EventItem from '../../components/EventItem'
 import TagBarComponent from '../../components/TagBarComponent'
 import { AddressModel } from '../../models/AddressModel'
 import Geolocation from '@react-native-community/geolocation'
+import axios from 'axios'
 const HomeScreen = ({ navigation }: any) => {
   const dispatch = useDispatch();
   const auth = useSelector(authSelector);
+  const [currentLocation, setCurrentLocation] = useState<AddressModel>();
 
   useEffect(() => {
     Geolocation.getCurrentPosition((position) => {
       console.log(position);
+      reverseGeoCode({
+        lat: 11.1858,
+        long: 107.36656,
+      });
     })
 
   }, [])
-  const [currentLocation, setCurrentLocation] = useState<AddressModel>()
+  const reverseGeoCode = async ({ lat, long }: { lat: number; long: number }) => {
+    const api = `https://revgeocode.search.hereapi.com/v1/revgeocode?at=${lat},${long}&lang=en-US&apiKey=bBf4UCUlNdYQ6HtiWSwECZ8nGwthSwR39tD6bzrEo7A`;
+    try {
+      const res = await axios(api);
+
+      if (res && res.status === 200 && res.data) {
+        const items = res.data.items;
+
+        setCurrentLocation(items[0]);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   const itemEvent = {
     title: 'International Band Music Concert',
     description:
@@ -71,13 +91,15 @@ const HomeScreen = ({ navigation }: any) => {
                   color={appColors.white}
                 />
               </RowComponent>
-              <TextComponent
-                text="New York, USA"
-                flex={0}
-                color={appColors.white}
-                font={fontFamilies.medium}
-                size={13}
-              />
+              {currentLocation && (
+                <TextComponent
+                  text={`${currentLocation.address.city}, ${currentLocation.address.countryName}`}
+                  flex={0}
+                  color={appColors.white}
+                  font={fontFamilies.medium}
+                  size={13}
+                />
+              )}
             </View>
 
             <CircleComponent color="#524CE0" size={36}>
